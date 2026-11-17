@@ -235,7 +235,9 @@ struct Config {
     std::vector<Accel> accel = std::vector<Accel>(4);
 
     // Optional screen a seat's pointer is kept inside, by its Windows device
-    // name (\\.\DISPLAY2). Empty: the pointer roams the whole desktop. A
+    // name (\\.\DISPLAY2). Absolute mouse input (e.g. a touch frame in mouse
+    // mode) maps its full coordinate range onto this screen. Empty: relative
+    // input roams the desktop; absolute input follows its Windows flags. A
     // screen that is not plugged in behaves as empty, so the pointer is never
     // shut in a rectangle nobody can see; the key is kept for when it returns.
     std::vector<std::wstring> screen = std::vector<std::wstring>(4);

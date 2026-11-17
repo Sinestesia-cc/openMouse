@@ -102,6 +102,15 @@ Each mouse follows one of two modes (the sliders of the other mode are greyed ou
 For each mouse you can confine the pointer to one screen (handy when each person works on
 their own monitor) or let it roam the whole desktop.
 
+For a touch frame that reports absolute mouse input, select its monitor under **Keep
+inside screen**. The entire touch surface maps onto that monitor, so movement and clicks
+land at the corresponding position on the selected display. The assignment is saved and
+applies without restarting openMouse. Each device can have a different monitor, up to eight
+seats.
+
+This requires the frame to send mouse events to openMouse; devices that only send native
+touch input are not covered by this option.
+
 ### Learn a button
 
 A mouse sometimes has buttons Windows does not know. Click **Learn a button**, then press

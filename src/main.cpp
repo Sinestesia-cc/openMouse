@@ -1325,10 +1325,23 @@ void OnRawMouse(HANDLE dev, const RAWMOUSE& m) {
     if (m.usButtonFlags) g_stats[seat].buttons++; else g_stats[seat].moves++;
 
     if (m.usFlags & MOUSE_MOVE_ABSOLUTE) {
-        const RECT v = VirtualScreenRect();
+        // A touch frame in mouse mode reports a position, not a delta.
+        // Map its whole coordinate range onto the assigned monitor BEFORE
+        // relaying buttons; clamping desktop coordinates only pins much of
+        // the touch surface to that monitor's edges.
+        RECT target;
+        if (g_bounds[seat].screen) {
+            target = g_bounds[seat].rc;
+        } else if (m.usFlags & MOUSE_VIRTUAL_DESKTOP) {
+            target = VirtualScreenRect();
+        } else {
+            target = { 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
+        }
         POINT p;
-        p.x = v.left + (LONG)(((int64_t)m.lLastX * (v.right  - v.left)) / 65535);
-        p.y = v.top  + (LONG)(((int64_t)m.lLastY * (v.bottom - v.top))  / 65535);
+        // RECT's right/bottom are exclusive: 65535 must reach the last
+        // pixel INSIDE the target, including on monitors left of/above it.
+        p.x = target.left + (LONG)(((int64_t)m.lLastX * (target.right  - target.left - 1)) / 65535);
+        p.y = target.top  + (LONG)(((int64_t)m.lLastY * (target.bottom - target.top  - 1)) / 65535);
         g_seats[seat].pos = p;
         ClampSeat(seat, g_seats[seat].pos);
         g_dirty[seat] = true;

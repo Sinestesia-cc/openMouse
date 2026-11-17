@@ -114,6 +114,15 @@ Cada ratón sigue uno de dos modos (los controles del otro modo aparecen atenuad
 Para cada ratón puede limitar el puntero a una pantalla (útil cuando cada persona trabaja en
 su propio monitor) o dejarlo moverse por todo el escritorio.
 
+Si un marco táctil entrega su entrada como un ratón de coordenadas absolutas, seleccione
+su monitor en **Mantener dentro de la pantalla**. Toda la superficie táctil se asigna a
+esa pantalla: los movimientos y clics corresponden a su posición dentro del monitor
+elegido. La asignación se guarda y se aplica sin reiniciar openMouse. Puede asignar un
+monitor distinto a cada dispositivo, hasta ocho puestos.
+
+Esto requiere que el marco entregue eventos de ratón a openMouse; los dispositivos que
+solo entregan entrada táctil nativa no están cubiertos por esta opción.
+
 ### Aprender un botón
 
 A veces un ratón tiene botones que Windows no conoce. Haga clic en **Aprender un botón** y
